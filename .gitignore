@@ -1,0 +1,6 @@
+# Ignore temporary files
+.~lock.*
+.ruby-lsp/
+mysql
+*.log
+.DS_Store

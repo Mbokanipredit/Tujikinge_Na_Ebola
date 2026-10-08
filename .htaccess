@@ -1,0 +1,28 @@
+# ============================================================================
+# TUJIKINGE NA EBOLA — Apache .htaccess Configuration
+# Enables HTTPS redirection & clean URLs without .php extensions
+# ============================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Force HTTPS (Redirect http to https online)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^localhost [NC]
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Do not rewrite existing files or directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Append .php extension if matching PHP file exists
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.*)$ $1.php [L,QSA]
+</IfModule>
+
+# Prevent directory browsing
+Options -Indexes
+
+# UTF-8 Encoding
+AddDefaultCharset UTF-8
